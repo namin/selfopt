@@ -33,22 +33,14 @@ int f_iter(int n)
 
 funPtr fs[] = { &fib, &f_iter };
 
-int sk[] = {0, 0};
-int st[] = {0, 0};
-int sk_per[40][2] =
-  {
-   {0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},
-   {0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},
-   {0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},
-   {0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0}
-  };
-int st_per[40][2] =
-  {
-   {0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},
-   {0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},
-   {0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},
-   {0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0}
-  };
+#define F 2
+#define I 40
+#define FA {0, 0}
+#define IA {FA,FA,FA,FA,FA,FA,FA,FA,FA,FA,FA,FA,FA,FA,FA,FA,FA,FA,FA,FA,FA,FA,FA,FA,FA,FA,FA,FA,FA,FA,FA,FA,FA,FA,FA,FA,FA,FA,FA,FA}
+int sk[] = FA;
+int st[] = FA;
+int sk_per[I][F] = IA;
+int st_per[I][F] = IA;
 
 int measure(funPtr f, int arg)
 {
@@ -61,12 +53,12 @@ int measure(funPtr f, int arg)
 
 int sample_input()
 {
-  return rand() % 40;
+  return rand() % I;
 }
 
 int missing(int* sk)
 {
-  for (int i=0; i<2; i++) {
+  for (int i=0; i<F; i++) {
     if (sk[i]==0) return i;
   }
   return -1;
@@ -75,7 +67,7 @@ int missing(int* sk)
 double over(double* sr, int* sk, int* st)
 {
   double total = 0.0;
-  for (int i=0; i<2; i++) {
+  for (int i=0; i<F; i++) {
     if (st[i] != 0) {
       double r = sk[i]/(1.0*st[i]);
       sr[i] = r;
@@ -94,11 +86,11 @@ int sample_fun(int* sk, int* st)
 {
   int k = missing(sk);
   if (k != -1) return k;
-  double sr[] = {0.0,0.0};
+  double sr[] = FA;
   double total = over(sr, sk, st);
   double r = drand(total);
   double c = 0.0;
-  for (int i=0; i<2; i++) {
+  for (int i=0; i<F; i++) {
     if (r < c+sr[i]) return i;
     c += sr[i];
   }
@@ -108,16 +100,16 @@ int sample_fun(int* sk, int* st)
 int print_summary_per()
 {
   printf("\nSUMMARY\n");
-  for (int arg=0; arg<40; arg++) {
+  for (int arg=0; arg<I; arg++) {
     printf("arg=%2d ", arg);
-    double sr[] = {0.0,0.0};
+    double sr[] = FA;
     double total = over(sr, sk_per[arg], st_per[arg]);
     if (total > 0.0) {
-      for (int i=0; i<2; i++) {
+      for (int i=0; i<F; i++) {
         sr[i] /= total;
       }
     }
-    for (int i=0; i<2; i++) {
+    for (int i=0; i<F; i++) {
       printf("%.3f ", sr[i]);
     }
     printf("\n");
