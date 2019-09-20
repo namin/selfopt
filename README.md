@@ -6,7 +6,7 @@ prototyping self-optimizing systems
 
 In `chez` Scheme:
 - `(load "selfopt.scm")`
-- `(adaptive-pipeline 1000 10000)`
+- `(pipeline-adaptive 1000 10000)`
 - `(summary_per)`
 
 You'll see that `f` wins as n<=26 and `f_iter` wins as n>26, and the
