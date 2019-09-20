@@ -10,7 +10,7 @@ In `chez` Scheme:
 - `(summary_per)`
 
 You'll see that `f` wins as n<=26 and `f_iter` wins as n>26, and the
-win is proportionally bigger the furthr from n=26.
+win is proportionally bigger the further from n=26.
 This is the output of `(print_summary_per)`:
 
 ```
