@@ -144,6 +144,16 @@
                    (summary (cdr (assoc (car kv) (car st_per))) (cdr kv))))
            (car sk_per)))))
 
+(define print_summary_per
+  (lambda ()
+    (for-each (lambda (x)
+                (format #t "(~2@a " (car x))
+                (for-each (lambda (kv)
+                            (format #t "(~6@a ~,3f) "
+                                    (car kv) (cdr kv)))
+                          (cdr x))
+                (format #t ")\n")) (summary_per))))
+
 (define pipeline
   (lambda (n)
     (let loop ((i 0))
